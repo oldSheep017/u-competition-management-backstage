@@ -191,6 +191,52 @@ const userStore = useUserStore()
 const nickName = computed(() => userStore.nickName)
 ```
 
+### 引入Axios
+#### 安装
+```bash
+$ yarn add axios
+```
+#### 新建封装文件`src/utils/http.ts`
+```ts
+import axios, { AxiosInstance, AxiosRequestConfig, AxiosResponse } from 'axios'
+
+class IAxios {
+  private instance: AxiosInstance
+  private options: AxiosRequestConfig
+  constructor(options: AxiosRequestConfig) {
+    this.options = options
+    this.instance = axios.create(options)
+    this.setupInterceptor()
+  }
+
+  public getInstance(): AxiosInstance {
+    return this.instance
+  }
+
+  /**
+   * @description 设置拦截器
+   */
+  public setupInterceptor () {
+    this.instance.interceptors.request.use((config: AxiosRequestConfig) => {
+      return config
+    })
+
+    this.instance.interceptors.response.use((response: AxiosResponse) => {
+      return {
+        ...response.data,
+        status: response.status,
+        statusText: response.statusText
+      }
+    })
+  }
+
+}
+
+const http = new IAxios({ baseURL: 'https://www.youngcr.cn/capi', timeout: 10 * 1000 })
+
+export default http
+```
+
 ### 代码格式化-Prettier
 ```bash
 $ yarn add prettier -D
