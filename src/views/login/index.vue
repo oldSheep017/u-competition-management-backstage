@@ -1,210 +1,202 @@
 <template>
-	<!-- <template v-if="login">
-		<section class="login-wrapper shadow-lg rounded-md border border-gray-600">
-			<h1 class="text-xl">高校竞赛管理系统后台</h1>
-			<a-form
-				:model="loginForm"
-				:label-col="{ span: 8 }"
-				:wrapper-col="{ span: 16 }"
-				autocomplete="off"
-				@submit="useLogin"
-			>
-				<a-form-item
-					label="Username"
-					name="username"
-					:rules="rules.username"
-				>
-					<a-input v-model:value="loginForm.username" />
-				</a-form-item>
+  <div class="w-screen h-screen flex">
+    <div class="h-full grow min-w-0 w-3/5 relative">
+      <div
+        class="w-full h-full background-gray absolute inset-0 text-white flex justify-center items-center flex-col"
+      >
+        <p class="text-5xl w-full box-border px-64 font-bold">
+          高校竞赛管理系统
+        </p>
+        <p class="text-xl w-full box-border px-80">
+          <span class="ml-32">———竞赛流程管理的好帮手</span>
+        </p>
+      </div>
+      <img src="https://picsum.photos/600.webp" class="w-full h-full" alt="" />
+    </div>
+    <div class="grow-0 bg-white px-14 py-40 box-border w-2/5">
+      <template v-if="login">
+        <div class="max-w-md mx-auto space-y-8">
+          <div class="text-center">
+            <img src="../../assets/classify.svg" class="mx-auto my-8" />
+            <h2 class="text-gray-700 text-3xl mt-2">后台管理</h2>
+            <h2 class="text-gray-400 text-base mt-2">系统登录</h2>
+          </div>
+          <div class="text-base space-y-8">
+            <a-form :model="loginForm" autocomplete="off" layout="vertical">
+              <a-form-item label="账号" name="username" :rules="rules.username">
+                <a-input size="large" v-model:value="loginForm.username" />
+              </a-form-item>
 
-				<a-form-item
-					label="Password"
-					name="password"
-					:rules="rules.password"
-				>
-					<a-input-password v-model:value="loginForm.password" />
-				</a-form-item>
+              <a-form-item label="密码" name="password" :rules="rules.password">
+                <a-input-password
+                  size="large"
+                  v-model:value="loginForm.password"
+                />
+              </a-form-item>
 
-				<a-form-item :wrapper-col="{ span: 24 }">
-					<a-button type="primary" html-type="submit" block
-						>进入系统</a-button
-					>
-				</a-form-item>
+              <a-form-item>
+                <a-button type="primary" block size="large" @click="useLogin"
+                  >进入系统</a-button
+                >
+              </a-form-item>
 
-				<a-form-item :wrapper-col="{ span: 24 }">
-					<a-button type="link" block @click="showRegister"
-						>注册账号</a-button
-					>
-				</a-form-item>
-			</a-form>
-		</section>
-	</template>
-	<template v-else>
-		<a-form
-			:model="registerForm"
-			:label-col="{ span: 10 }"
-			:wrapper-col="{ span: 24 }"
-			autocomplete="off"
-			@submit="useRegister"
-		>
-			<a-form-item label="Username" name="username">
-				<a-input v-model:value="registerForm.username" />
-			</a-form-item>
-			<a-form-item label="Password" name="password">
-				<a-input v-model:value="registerForm.password" />
-			</a-form-item>
-			<a-form-item label="Nickname" name="nickname">
-				<a-input v-model:value="registerForm.nickname" />
-			</a-form-item>
-			<a-form-item label="University" name="university">
-				<a-select
-					ref="select"
-					v-model:value="registerForm.university"
-					style="width: 120px"
-				>
-					<template v-for="u in universities">
-						<a-select-option :value="u">{{ u }}</a-select-option>
-					</template>
-				</a-select>
-			</a-form-item>
-			<a-form-item label="Organization" name="organization">
-				<a-input v-model:value="registerForm.organization" />
-			</a-form-item>
+              <a-form-item>
+                <a-button type="link" block size="large" @click="showRegister"
+                  >注册账号</a-button
+                >
+              </a-form-item>
+            </a-form>
+          </div>
+        </div>
+      </template>
+      <template v-else>
+        <div class="max-w-md mx-auto space-y-8">
+          <div class="my-2">
+            <h2 class="text-gray-600 text-2xl text-center">注册表单</h2>
+          </div>
+          <div class="w-full">
+            <a-form
+              :mode="registerForm"
+              :autocomplete="false"
+              layout="vertical"
+            >
+              <a-form-item label="用户名" name="username">
+                <a-input v-model:value="registerForm.username" />
+              </a-form-item>
 
-			<a-form-item label="Phonenumber" name="phonenumber">
-				<a-input v-model:value="registerForm.phonenumber" />
-			</a-form-item>
+              <a-form-item label="密码" name="password">
+                <a-input v-model:value="registerForm.password" />
+              </a-form-item>
 
-			<a-form-item :wrapper-col="{ span: 24 }">
-				<a-button type="primary" block>注册</a-button>
-			</a-form-item>
+              <a-form-item label="昵称" name="nickname">
+                <a-input v-model:value="registerForm.nick_name" />
+              </a-form-item>
 
-			<a-form-item :wrapper-col="{ span: 24 }">
-				<a-button type="link" danger block @click="showLogin"
-					>返回</a-button
-				>
-			</a-form-item>
-		</a-form>
-	</template> -->
-	<div class="w-screen h-screen flex">
-		<div class="h-full grow min-w-0 w-3/5 bg-gray-700"></div>
-		<div class="grow-0 bg-white px-14 py-40 box-border w-2/5">
-			<div class="max-w-md w-full mx-auto space-y-8">
-				<div class="text-center">
-					<h1 class="text-3xl">高校竞赛管理系统后台</h1>
-					<h2 class="text-gray-500 text-sm mt-2">系统登录</h2>
-				</div>
-				<div class="text-base space-y-8">
-					<a-form
-						:model="loginForm"
-						autocomplete="off"
-						@submit="useLogin"
-					>
-						<a-form-item
-							label="账号"
-							name="username"
-							:rules="rules.username"
-						>
-							<a-input
-								size="large"
-								v-model:value="loginForm.username"
-							/>
-						</a-form-item>
+              <a-form-item label="所属高校" name="university">
+                <a-select v-model:value="registerForm.university">
+                  <a-option
+                    v-for="(o, index) in universities"
+                    :key="index"
+                    :label="o"
+                    :value="o"
+                  />
+                </a-select>
+              </a-form-item>
 
-						<a-form-item
-							label="密码"
-							name="password"
-							:rules="rules.password"
-						>
-							<a-input-password
-								size="large"
-								v-model:value="loginForm.password"
-							/>
-						</a-form-item>
+              <a-form-item label="子组织" name="organization">
+                <a-input v-model:value="registerForm.organization" />
+              </a-form-item>
 
-						<a-form-item>
-							<a-button
-								type="primary"
-								html-type="submit"
-								block
-								size="large"
-								>进入系统</a-button
-							>
-						</a-form-item>
+              <a-form-item label="联系电话" name="phonenumber">
+                <a-input v-model:value="registerForm.phone_number" />
+              </a-form-item>
 
-						<a-form-item>
-							<a-button
-								type="link"
-								block
-								@click="showRegister"
-								size="large"
-								>注册账号</a-button
-							>
-						</a-form-item>
-					</a-form>
-				</div>
-			</div>
-		</div>
-	</div>
+              <a-form-item>
+                <a-button type="primary" size="large" block @click="useRegister"
+                  >提交注册</a-button
+                >
+              </a-form-item>
+
+              <a-form-item>
+                <a-button danger size="large" block @click="showLogin"
+                  >返回登录</a-button
+                >
+              </a-form-item>
+            </a-form>
+          </div>
+        </div>
+      </template>
+    </div>
+  </div>
 </template>
 
 <script lang="ts" setup>
 import { reactive, ref } from 'vue'
 import { useRouter } from 'vue-router'
 import { message } from 'ant-design-vue'
+import { ILoginForm } from '../../types'
+import { LoginRequest } from '../../api'
 
 const router = useRouter()
 
 interface LoginState {
-	username: string
-	password: string
+  username: string
+  password: string
 }
 
 interface RegisterState {
-	username: string
-	password: string
-	nickname: string
-	university: string
-	organization: string
-	phonenumber: string
+  username: string
+  password: string
+  nick_name: string
+  university: string
+  organization: string
+  phone_number: string
 }
 
 const loginForm = reactive<LoginState>({
-	username: '',
-	password: '',
+  username: '',
+  password: '',
 })
 
 const login = ref(true)
+const loading = ref(false)
+const loginKey = 'login'
+const registerKey = 'register'
 
 const rules = reactive({
-	username: [{ required: true, message: '用户名不可为空' }],
-	password: [{ required: true, message: '密码不可为空' }],
+  username: [{ required: true, message: '用户名不可为空' }],
+  password: [{ required: true, message: '密码不可为空' }],
 })
 
 const useLogin = () => {
-	message.error('烫烫烫烫烫烫')
-	router.push({ path: '/' })
+  message.loading({ content: '登录中...', key: loginKey })
+  LoginRequest.login(loginForm).then(
+    (result) => {
+      if (!result.data) {
+        message.error({ content: result.message, key: loginKey })
+        return
+      } else {
+        message.success({ content: result.message, key: loginKey })
+      }
+    },
+    (reason) => {
+      message.error('出错')
+    }
+  )
 }
 
-const useRegister = (e: any) => {
-	console.log(e)
+const useRegister = () => {
+  message.loading({ content: '注册中...', key: registerKey })
+  LoginRequest.register(registerForm).then(
+    (result) => {
+      if (result.code > 200) {
+        message.warn({ content: result.message, key: registerKey })
+      } else {
+        message.success({ content: result.message, key: registerKey })
+        login.value = true
+      }
+    },
+    (reason) => {
+      message.error('创建失败')
+    }
+  )
 }
 
 const registerForm = reactive<RegisterState>({
-	username: '',
-	password: '',
-	university: '',
-	nickname: '',
-	organization: '',
-	phonenumber: '',
+  username: '',
+  password: '',
+  university: '',
+  nick_name: '',
+  organization: '',
+  phone_number: '',
 })
 
 const showRegister = () => {
-	login.value = false
+  login.value = false
 }
 
 const showLogin = () => {
-	login.value = true
+  login.value = true
 }
 
 const universities = ref(['海南医学院', '海南大学', '海南师范大学', '复旦大学'])
@@ -212,17 +204,21 @@ const universities = ref(['海南医学院', '海南大学', '海南师范大学
 
 <style>
 .login-wrapper {
-	display: flex;
-	justify-content: center;
-	align-items: center;
-	flex-direction: column;
-	width: 600px;
-	height: 400px;
-	/* background-color: #fff; */
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  flex-direction: column;
+  width: 600px;
+  height: 400px;
+  /* background-color: #fff; */
 }
 
 .right {
-	width: 672px;
-	height: 100%;
+  width: 672px;
+  height: 100%;
+}
+
+.background-gray {
+  background-color: rgba(51, 51, 51, 0.5);
 }
 </style>
