@@ -1,7 +1,5 @@
 <template>
-  <div class="text-md flex">
-
-  </div>
+  <div id="chart" />
 </template>
 
 <script lang="ts">
