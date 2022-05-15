@@ -2,7 +2,6 @@
   <div
     class="h-14 w-full bg-slate-50 text-base my-4 box-border px-6 flex items-center font-bold"
   >
-    <!-- {{ model }} -->
     <a-form layout="inline">
       <a-form-item label="项目名称">
         <a-input v-model:value="model.title" />

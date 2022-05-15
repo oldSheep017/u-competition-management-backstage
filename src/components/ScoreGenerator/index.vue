@@ -23,18 +23,6 @@ import { PlusOutlined } from '@ant-design/icons-vue'
 import ScoreItem from './components/ScoreItem.vue'
 import { randomString } from '../../utils'
 import { IScoreItem } from '../../types'
-class ScoreItemType implements IScoreItem {
-  id: string
-  title: string
-  score: number
-  step: number
-  constructor(id: string, title: string, score: number, step: number) {
-    this.id = id
-    this.title = title
-    this.score = score
-    this.step = step
-  }
-}
 export default defineComponent({
   name: 'ScoreGenerator',
   components: {
