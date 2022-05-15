@@ -13,7 +13,9 @@
         <router-view />
       </a-layout-content>
     </a-layout>
-    <a-layout-footer class="font-bold flex justify-center items-center" :style="styles.footer"
+    <a-layout-footer
+      class="font-bold flex justify-center items-center"
+      :style="styles.footer"
       >Developed by Young youngcoding@163.com</a-layout-footer
     >
   </a-layout>
@@ -31,6 +33,7 @@ const styles = reactive({
   },
   content: {
     overflowY: 'scroll',
+    overflowX: 'hidden',
   },
   header: {
     backgroundColor: '#fff',
@@ -45,7 +48,7 @@ const styles = reactive({
   footer: {
     fontSize: '16px',
     backgroundColor: '#fff',
-    height: '48px'
+    height: '48px',
   },
 })
 </script>
