@@ -1,3 +1,4 @@
+import type { UploadProps } from 'ant-design-vue'
 interface IResponse<T> {
   code: number,
   message: string,
@@ -10,7 +11,17 @@ interface IScoreItem {
   id: string,
   title: string,
   score: number,
-  step: number
+  step: number,
+  remark: string
+}
+
+interface IAwardItem {
+  id: string,
+  level: number,
+  amount: number,
+  award: string,
+  remark: string,
+  type: number
 }
 
 interface IScheduleItem {
@@ -31,6 +42,33 @@ interface IRegisterForm {
   university: string
   organization: string
   phone_number: string
+}
+
+interface ScoreChart {
+  id: string
+  title: string
+  score: number
+  step: number
+  remark: string
+}
+
+interface ICreateCompetition {
+  name: string
+  level: number
+  startDate: string
+  endDate: string
+  hasWork: boolean
+  workType: number
+  introduction: string
+  tag: string[]
+  host: string
+  assist: string[]
+  stageCount: number
+  schedule: IScheduleItem[]
+  cover: UploadProps['fileList']
+  scoreChart: ScoreChart[]
+  code: string,
+  award: IAwardItem[]
 }
 
 interface ObjectID {
@@ -56,7 +94,9 @@ interface IUserRecord {
 
 export type {
   IScoreItem,
+  IAwardItem,
   IScheduleItem,
+  ICreateCompetition,
   ILoginForm,
   IRegisterForm,
   IResponse,
