@@ -8,7 +8,7 @@
           高校竞赛管理系统
         </p>
         <p class="text-xl w-full box-border px-80">
-          <span class="ml-32">———竞赛流程管理的好帮手</span>
+          <span class="ml-32">———竞赛流程管理工具</span>
         </p>
       </div>
       <img src="https://picsum.photos/600.webp" class="w-full h-full" alt="" />
@@ -157,6 +157,7 @@ const useLogin = () => {
         return
       } else {
         message.success({ content: result.message, key: loginKey })
+        router.replace({ name: 'Index' })
       }
     },
     (reason) => {
