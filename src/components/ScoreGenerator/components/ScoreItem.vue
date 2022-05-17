@@ -12,6 +12,12 @@
       <a-form-item label="分数步长">
         <a-input-number v-model:value="model.step" />
       </a-form-item>
+      <a-form-item label="备注">
+        <a-input
+          v-model:value="model.remark"
+          placeholder="对评分项的说明（可选）"
+        />
+      </a-form-item>
     </a-form>
 
     <a-popconfirm

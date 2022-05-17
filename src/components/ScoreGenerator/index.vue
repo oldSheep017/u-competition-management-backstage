@@ -1,5 +1,5 @@
 <template>
-  <section class="w-[1000px]">
+  <section class="w-[1000px] h-auto">
     <!-- 按钮区域 -->
     <header class="w-full h-16 bg-slate-100 flex items-center box-border px-6">
       <a-button type="primary" size="large" v-on:click="addItem">
@@ -34,7 +34,7 @@ export default defineComponent({
       type: Array as PropType<IScoreItem[]>,
       required: true,
     },
-  }, 
+  },
   emits: ['update:sheet'],
   setup(props, { emit }) {
     const { sheet } = toRefs(props)
@@ -44,6 +44,7 @@ export default defineComponent({
       title: '',
       score: 0,
       step: 1,
+      remark: ''
     })
 
     const addItem = () => {
