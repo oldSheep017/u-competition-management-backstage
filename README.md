@@ -196,7 +196,8 @@ const nickName = computed(() => userStore.nickName)
 ```bash
 $ yarn add axios
 ```
-#### 新建封装文件`src/utils/http.ts`
+#### 封装
+- 新建文件`src/utils/http.ts`
 ```ts
 import axios, { AxiosInstance, AxiosRequestConfig, AxiosResponse } from 'axios'
 
