@@ -13,15 +13,27 @@ const routes: RouteRecordRaw[] = [
     children: [
       {
         path: '',
-        name: 'Index',
-        component: () => import('../views/index/index.vue'),
+        name: 'Home',
+        component: () => import('../views/home/index.vue'),
       },
-			{
-				path: 'create',
-				name: 'Create',
-				component: () => import('../views/create/index.vue')
-			}
+      {
+        path: 'create',
+        name: 'Create',
+        component: () => import('../views/create/index.vue'),
+      },
     ],
+  },
+  {
+    path: '/competition',
+    component: Layout,
+    children: [
+      {
+        path: '',
+        name: 'CompetitionDetail',
+        component: () => import('../views/detail/competition/index.vue'),
+        meta: { hidden: true }
+      }
+    ]
   },
   // {
   //   path: '/staff',

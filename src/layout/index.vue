@@ -6,7 +6,7 @@
       <Avatar />
     </a-layout-header>
     <a-layout>
-      <a-layout-sider width="256" :style="styles.sider">
+      <a-layout-sider width="256" :style="styles.sider" v-show="!hideSiderBar">
         <Menu />
       </a-layout-sider>
       <a-layout-content :style="styles.content">
@@ -23,7 +23,10 @@
 
 <script setup lang="ts">
 import { Menu, Avatar, Logo } from './components/index'
-import { reactive } from 'vue'
+import { reactive, watch, ref } from 'vue'
+import { useRoute } from 'vue-router'
+const route = useRoute()
+const hideSiderBar = ref(false)
 const styles = reactive({
   layout: {},
   sider: {
@@ -51,6 +54,15 @@ const styles = reactive({
     height: '48px',
   },
 })
-</script>
 
-<style scoped></style>
+watch(
+  () => route.path,
+  () => {
+    if (route.meta.hidden) {
+      hideSiderBar.value = true
+    } else {
+      hideSiderBar.value = false
+    }
+  }
+)
+</script>

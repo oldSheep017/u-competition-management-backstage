@@ -1,8 +1,8 @@
 <template>
 	<div
-		class="w-64 h-full box-border border-r text-center border-gray-400"
+		class="w-64 h-full box-border text-center "
 	>
-		高校竞赛管理后台
+		<!-- 高校竞赛管理后台 -->
 	</div>
 </template>
 

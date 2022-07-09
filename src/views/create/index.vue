@@ -20,36 +20,40 @@
             <a-row type="flex">
               <a-col :span="5">
                 <a-form-item label="竞赛名称" name="name">
-                  <a-input v-model:value="createForm.name" />
+                  <a-input v-model:value="createForm.name" size="large" />
                 </a-form-item>
               </a-col>
               <a-col :span="4" :offset="1">
                 <a-form-item label="竞赛范围" name="level">
-                  <a-select
-                    ref="select"
-                    v-model:value="createForm.level"
-                    style="width: 160px"
-                  >
-                    <a-select-option :value="0">本校</a-select-option>
-                    <a-select-option :value="1">开放</a-select-option>
-                  </a-select>
+                  <a-tooltip>
+                    <template #title>选择“开放”后，非本校学生也可报名</template>
+                    <a-select
+                      size="large"
+                      ref="select"
+                      v-model:value="createForm.level"
+                      style="width: 160px"
+                    >
+                      <a-select-option :value="0">本校</a-select-option>
+                      <a-select-option :value="1">开放</a-select-option>
+                    </a-select>
+                  </a-tooltip>
                 </a-form-item>
               </a-col>
               <a-col :span="2">
                 <a-form-item label="是否为作品赛" name="hasWork">
                   <a-switch
-                    v-model:checked="createForm.hasWork"
+                    v-model:checked="createForm.has_work"
                     checked-children="是"
                     un-checked-children="否"
                   />
                 </a-form-item>
               </a-col>
               <a-col :span="6">
-                <template v-if="createForm.hasWork">
+                <template v-if="createForm.has_work">
                   <a-form-item label="作品形式" name="workType">
                     <a-select
                       ref="select"
-                      v-model:value="createForm.workType"
+                      v-model:value="createForm.work_type"
                       style="width: 120px"
                     >
                       <a-select-option :value="0">文字</a-select-option>
@@ -65,19 +69,23 @@
               <a-col :span="4">
                 <a-form-item label="开始日期">
                   <a-date-picker
+                    size="large"
                     v-model:value="createForm.start_date"
                     :disabled-date="disabledStartDate"
                   />
                 </a-form-item>
               </a-col>
+
               <a-col :span="4">
                 <a-form-item label="结束日期">
                   <a-date-picker
+                    size="large"
                     v-model:value="createForm.end_date"
                     :disabled-date="disabledEndDate"
                   />
                 </a-form-item>
               </a-col>
+
               <a-col :span="2">
                 <a-form-item label="阶段数">
                   <a-input-number
@@ -88,39 +96,107 @@
                   />
                 </a-form-item>
               </a-col>
+
+              <a-col :span="2" :offset="1">
+                <a-form-item label="是否有指导教师">
+                  <a-radio-group
+                    size="large"
+                    v-model:value="createForm.has_teacher"
+                    option-type="button"
+                    :options="hasTeacherOptions"
+                  />
+                </a-form-item>
+              </a-col>
+            </a-row>
+
+            <a-row type="flex">
+              <a-col :span="2">
+                <a-form-item label="赛制">
+                  <a-select size="large" v-model:value="createForm.rule">
+                    <a-select-option :value="0">个人赛</a-select-option>
+                    <a-select-option :value="1">团队赛</a-select-option>
+                  </a-select>
+                </a-form-item>
+              </a-col>
+
+              <template v-if="createForm.rule">
+                <a-col :span="6" :offset="2">
+                  <a-form-item label="队伍人数">
+                    <a-slider
+                      v-model:value="createForm.team_max"
+                      size="large"
+                      :min="2"
+                      :max="200"
+                    />
+                  </a-form-item>
+                </a-col>
+
+                <a-col :span="2" :offset="1">
+                  <a-form-item label=" ">
+                    <a-input-number
+                      v-model:value="createForm.team_max"
+                      size="large"
+                      :min="2"
+                      :max="200"
+                    />
+                  </a-form-item>
+                </a-col>
+              </template>
             </a-row>
 
             <a-row type="flex">
               <a-col :span="4">
                 <a-form-item label="主办方">
-                  <a-input v-model:value="createForm.host" disabled />
-                </a-form-item>
-              </a-col>
-              <a-col :span="4" :offset="1">
-                <a-form-item label="协办方">
-                  <a-select
-                    v-model:value="createForm.assist"
-                    mode="tags"
-                    style="width: 100%"
-                    placeholder="输入内容后按Enter"
+                  <a-input
+                    size="large"
+                    v-model:value="createForm.host"
+                    disabled
                   />
                 </a-form-item>
               </a-col>
+              <a-col :span="2" :offset="1">
+                <a-form-item label="是否有协办方">
+                  <a-switch
+                    v-model:checked="createForm.has_assist"
+                    checked-children="是"
+                    un-checked-children="否"
+                  />
+                </a-form-item>
+              </a-col>
+              <template v-if="createForm.has_assist">
+                <a-col :span="4" :offset="1">
+                  <a-form-item label="协办方">
+                    <a-select
+                      size="large"
+                      v-model:value="createForm.assist"
+                      mode="tags"
+                      style="width: 100%"
+                      placeholder="输入内容后按Enter"
+                    />
+                  </a-form-item>
+                </a-col>
+              </template>
             </a-row>
 
             <a-row type="flex" class="h-auto">
               <a-col :span="8">
                 <a-form-item label="赛程安排">
                   <template v-for="(n, index) in createForm.stage">
-                    <div class="flex my-4">
-                      <h1 class="w-48">阶段{{ index + 1 }}范围</h1>
+                    <div class="flex items-center my-4 justify-start">
+                      <h1 class="w-48 text-base mr-4">
+                        阶段{{ index + 1 }}范围
+                      </h1>
                       <a-range-picker
+                        size="large"
                         v-model:value="createForm.schedule[index].range"
                       />
                     </div>
-                    <div class="flex">
-                      <h1 class="w-48">阶段{{ index + 1 }}名称</h1>
+                    <div class="flex items-center">
+                      <h1 class="w-48 text-base mr-4">
+                        阶段{{ index + 1 }}名称
+                      </h1>
                       <a-input
+                        size="large"
                         v-model:value="createForm.schedule[index].action"
                       />
                     </div>
@@ -145,6 +221,7 @@
               <a-col :span="8" :offset="2">
                 <a-form-item label="封面图片(可选)">
                   <a-upload
+                    size="large"
                     v-model:file-list="createForm.cover"
                     list-type="picture"
                     :max-count="1"
@@ -204,7 +281,7 @@
         <a-result
           status="success"
           :title="result.resultTitle"
-          sub-title="Order number: 2017182818828182881 Cloud server configuration takes 1-5 minutes, please wait."
+          sub-title="The conpetition has been created successfully, so you can inform the students to participate in it."
         >
           <template #extra>
             <a-button key="console" type="primary" @click="goHome"
@@ -220,11 +297,11 @@
 <script lang="ts" setup>
 import dayjs, { Dayjs } from 'dayjs'
 import { useRouter } from 'vue-router'
-import { IScheduleItem, IAwardItem } from '../../types/index'
+import type { IScheduleItem, IAwardItem, IUserInfo } from '../../types/index'
 import { reactive, ref, computed, watch } from 'vue'
-import type { UploadProps } from 'ant-design-vue'
+import type { RadioGroupProps, UploadProps } from 'ant-design-vue'
 import { message } from 'ant-design-vue'
-import { randomString } from '../../utils'
+import { randomString, getSessionItem } from '../../utils'
 import ScoreGenerator from '../../components/ScoreGenerator/index.vue'
 import AwardGenerator from '../../components/AwardGenerator/index.vue'
 import { CreateRequest } from '../../api'
@@ -242,9 +319,13 @@ interface CreateState {
   level: number
   start_date: string
   end_date: string
-  hasWork: boolean
-  workType: number
+  has_work: boolean
+  work_type: number
+  has_teacher: boolean
+  has_assist: boolean
   introduction: string
+  rule: number
+  team_max: number
   tag: string[]
   host: string
   assist: string[]
@@ -253,10 +334,13 @@ interface CreateState {
   cover: UploadProps['fileList']
   score_chart: ScoreChart[]
   code: string
-  award: IAwardItem[]
+  award: IAwardItem[],
+  creator_id: string
 }
 
 const router = useRouter()
+// @ts-ignore
+const user = reactive<IUserInfo>(JSON.parse(getSessionItem('user')))
 
 // 控制步骤条
 const current = ref(0)
@@ -319,11 +403,15 @@ const createForm = reactive<CreateState>({
   level: 0,
   start_date: '',
   end_date: '',
-  hasWork: false,
-  workType: 0,
+  has_work: false,
+  work_type: 0,
+  has_teacher: true,
+  has_assist: false,
   introduction: '',
+  rule: 0,
+  team_max: 4,
   tag: [],
-  host: '海南医学院老羊',
+  host: user.nick_name,
   assist: [],
   stage: 1,
   schedule: [
@@ -337,10 +425,16 @@ const createForm = reactive<CreateState>({
   score_chart: [],
   code: '',
   award: [],
+  creator_id: user._id
 })
 
+const hasTeacherOptions: RadioGroupProps['options'] = [
+  { label: '是', value: true },
+  { label: '否', value: false },
+]
+
 const createCompetition = () => {
-  CreateRequest.create(createForm).then((res) => {
+  CreateRequest.create(createForm).then((res: any) => {
     console.log(res)
     if (res.code === 200) {
       result.showResult = true
@@ -367,6 +461,20 @@ watch(
     } else {
       createForm.schedule.splice(0, 1)
     }
+  }
+)
+
+watch(
+  () => createForm.rule,
+  (current) => {
+    createForm.team_max = current ? 2 : 1
+  }
+)
+
+watch(
+  () => createForm.has_assist,
+  () => {
+    createForm.assist = []
   }
 )
 </script>

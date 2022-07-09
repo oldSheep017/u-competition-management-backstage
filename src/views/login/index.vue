@@ -114,10 +114,12 @@
 import { reactive, ref } from 'vue'
 import { useRouter } from 'vue-router'
 import { message } from 'ant-design-vue'
-import { ILoginForm } from '../../types'
 import { LoginRequest } from '../../api'
+import { useUserStore } from '../../store/user'
+import { setSessionItem } from '../../utils'
 
 const router = useRouter()
+const userStore = useUserStore()
 
 interface LoginState {
   username: string
@@ -149,15 +151,22 @@ const rules = reactive({
 })
 
 const useLogin = () => {
+  if (!loginForm.username || !loginForm.password) {
+    message.warn('请输入用户名和密码')
+    return void 0
+  }
+
   message.loading({ content: '登录中...', key: loginKey })
   LoginRequest.login(loginForm).then(
-    (result) => {
+    (result: any) => {
       if (!result.data) {
         message.error({ content: result.message, key: loginKey })
         return
       } else {
         message.success({ content: result.message, key: loginKey })
-        router.replace({ name: 'Index' })
+        setSessionItem('user', JSON.stringify(result.data))
+        userStore.setUserInfo(result.data)
+        router.replace({ name: 'Home' })
       }
     },
     (reason) => {
@@ -169,7 +178,7 @@ const useLogin = () => {
 const useRegister = () => {
   message.loading({ content: '注册中...', key: registerKey })
   LoginRequest.register(registerForm).then(
-    (result) => {
+    (result: any) => {
       if (result.code > 200) {
         message.warn({ content: result.message, key: registerKey })
       } else {
